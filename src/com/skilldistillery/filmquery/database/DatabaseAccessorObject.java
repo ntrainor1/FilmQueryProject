@@ -28,7 +28,7 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 
 		try {
 			conn = DriverManager.getConnection(URL, username, password);
-			String sql = "SELECT * FROM film WHERE id = ?";
+			String sql = "SELECT f.id, f.title, f.description, f.release_year, f.language_id, f.rental_duration, f.rental_rate, f.length, f.replacement_cost, f.rating, f.special_features, l.name FROM film f JOIN language l ON f.language_id = l.id WHERE f.id = ?";
 			PreparedStatement stmt = conn.prepareStatement(sql);
 			stmt.setInt(1, filmId);
 			ResultSet rs = stmt.executeQuery();
@@ -46,8 +46,9 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 				String rating = rs.getString(10);
 				String specialFeatures = rs.getString(11);
 				List<Actor> totalActors = getActorsByFilmId(id);
-				filmByID = new Film(id, title, description, releaseYear, languageId, rentalDuration, rentalRate,
-						length, replacementCost, rating, specialFeatures, totalActors);
+				String language = rs.getString(12);
+				filmByID = new Film(id, title, description, releaseYear, languageId, rentalDuration, rentalRate, length,
+						replacementCost, rating, specialFeatures, totalActors, language);
 			}
 
 			rs.close();
@@ -126,8 +127,47 @@ public class DatabaseAccessorObject implements DatabaseAccessor {
 	}
 
 	@Override
-	public Film getFilmByKeyword(String keyword) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Film> getFilmsByKeyword(String keyword) {
+		Connection conn;
+		List<Film> filmsByKeyword = new ArrayList<>();
+
+		try {
+			conn = DriverManager.getConnection(URL, username, password);
+			String sql = "SELECT f.id, f.title, f.description, f.release_year, f.language_id, f.rental_duration, f.rental_rate, f.length, f.replacement_cost, f.rating, f.special_features, l.name FROM film f JOIN language l ON f.language_id = l.id WHERE (title LIKE ?) OR (description LIKE ?)";
+			PreparedStatement stmt = conn.prepareStatement(sql);
+			String toBeSet = "%" + keyword + "%";
+			stmt.setString(1, toBeSet);
+			stmt.setString(2, toBeSet);
+			ResultSet rs = stmt.executeQuery();
+
+			while (rs.next()) {
+				int id = rs.getInt(1);
+				String title = rs.getString(2);
+				String description = rs.getString(3);
+				int releaseYear = rs.getInt(4);
+				int languageId = rs.getInt(5);
+				int rentalDuration = rs.getInt(6);
+				double rentalRate = rs.getDouble(7);
+				int length = rs.getInt(8);
+				double replacementCost = rs.getDouble(9);
+				String rating = rs.getString(10);
+				String specialFeatures = rs.getString(11);
+				List<Actor> totalActors = getActorsByFilmId(id);
+				String language = rs.getString(12);
+				Film filmByID = new Film(id, title, description, releaseYear, languageId, rentalDuration, rentalRate, length,
+						replacementCost, rating, specialFeatures, totalActors, language);
+				filmsByKeyword.add(filmByID);
+			}
+
+			rs.close();
+			stmt.close();
+			conn.close();
+		} catch (SQLException e) {
+			System.err.println("A SQLException has occurred, cannot return any film.");
+			e.printStackTrace();
+			System.exit(1);
+		}
+
+		return filmsByKeyword;
 	}
 }

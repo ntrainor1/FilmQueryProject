@@ -15,6 +15,7 @@ public class Film {
 	private String rating;
 	private String specialFeatures;
 	private List<Actor> totalActors;
+	private String language;
 
 	public int getId() {
 		return id;
@@ -112,12 +113,21 @@ public class Film {
 		this.totalActors = totalActors;
 	}
 
+	public String getLanguage() {
+		return language;
+	}
+
+	public void setLanguage(String language) {
+		this.language = language;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((description == null) ? 0 : description.hashCode());
 		result = prime * result + id;
+		result = prime * result + ((language == null) ? 0 : language.hashCode());
 		result = prime * result + languageId;
 		result = prime * result + length;
 		result = prime * result + ((rating == null) ? 0 : rating.hashCode());
@@ -150,6 +160,12 @@ public class Film {
 		else if (!description.equals(other.description))
 			return false;
 		if (id != other.id)
+			return false;
+		if (language == null) {
+			if (other.language != null)
+				return false;
+		}
+		else if (!language.equals(other.language))
 			return false;
 		if (languageId != other.languageId)
 			return false;
@@ -193,36 +209,39 @@ public class Film {
 	@Override
 	public String toString() {
 		StringBuilder builder = new StringBuilder();
-		builder.append("Film: id = ");
+		builder.append("Film [id=");
 		builder.append(id);
-		builder.append(", ");
+		builder.append(", title=");
 		builder.append(title);
-		builder.append("\n");
+		builder.append(", description=");
 		builder.append(description);
-		builder.append(",\nReleased: ");
+		builder.append(", releaseYear=");
 		builder.append(releaseYear);
-		builder.append(", Language ID: ");
+		builder.append(", languageId=");
 		builder.append(languageId);
-		builder.append(", Rental Duration: ");
+		builder.append(", rentalDuration=");
 		builder.append(rentalDuration);
-		builder.append(", Rental Rate: ");
+		builder.append(", rentalRate=");
 		builder.append(rentalRate);
-		builder.append(", Length: ");
+		builder.append(", length=");
 		builder.append(length);
-		builder.append(", Replacement Cost: ");
+		builder.append(", replacementCost=");
 		builder.append(replacementCost);
-		builder.append(", Rating: ");
+		builder.append(", rating=");
 		builder.append(rating);
-		builder.append(",\nSpecial Features: ");
+		builder.append(", specialFeatures=");
 		builder.append(specialFeatures);
-		builder.append(",\nTotal Actors: ");
+		builder.append(", totalActors=");
 		builder.append(totalActors);
+		builder.append(", language=");
+		builder.append(language);
+		builder.append("]");
 		return builder.toString();
 	}
 
 	public Film(int id, String title, String description, int releaseYear, int languageId, int rentalDuration,
 			double rentalRate, int length, double replacementCost, String rating, String specialFeatures,
-			List<Actor> totalActors) {
+			List<Actor> totalActors, String language) {
 		super();
 		this.id = id;
 		this.title = title;
@@ -236,5 +255,7 @@ public class Film {
 		this.rating = rating;
 		this.specialFeatures = specialFeatures;
 		this.totalActors = totalActors;
+		this.language = language;
 	}
+
 }
