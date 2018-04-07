@@ -139,8 +139,8 @@ public class FilmQueryApp {
 	}
 	
 	private void displayFilm(Film toBeDisplayed) {
-		System.out.println("TITLE: " + toBeDisplayed.getTitle() + "\t|| RELEASED: " + toBeDisplayed.getReleaseYear() + " || RATED " +  toBeDisplayed.getRating() + "\t|| LANGUAGE " +  toBeDisplayed.getLanguage());
-		System.out.println(toBeDisplayed.getDescription() + ".");
+		System.out.println("TITLE: " + toBeDisplayed.getTitle() + "\t|| RELEASED: " + toBeDisplayed.getReleaseYear() + " || RATED: " +  toBeDisplayed.getRating() + "\t|| LANGUAGE: " +  toBeDisplayed.getLanguage());
+		System.out.println("   " + toBeDisplayed.getDescription() + ".");
 		System.out.print("CAST:\t");
 		for (Actor castMember : toBeDisplayed.getTotalActors()) {
 			System.out.println(castMember.getFirstName() + " " + castMember.getLastName());
