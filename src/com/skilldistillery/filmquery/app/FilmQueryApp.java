@@ -32,8 +32,7 @@ public class FilmQueryApp {
 			try {
 				userChoice = input.nextInt();
 			} catch (InputMismatchException ime) {
-				System.err.println("Input 1-3 next time!");
-				System.exit(1);
+				input.nextLine();
 			}
 
 			if (userChoice == 1) {

@@ -37,7 +37,7 @@ class DatabaseAccessTests {
 	}
 	
 	@Test
-	void test_getActorsByFilmId_with_invalid_id_returns_null() {
+	void test_getActorsByFilmId_with_invalid_id_returns_empty_list() {
 		List<Actor> castList = db.getActorsByFilmId(-42);
 		assertEquals(castList.size(), 0);
 	}
