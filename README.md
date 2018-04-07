@@ -18,6 +18,8 @@ Pressing 2 informs the program to search through the film database by a given ke
 
 Pressing 3 ends the program while wishing the user goodbye.
 
+JUnit tests are also supplied for various outputs for the methods used by FilmQueryApp in DatabaseAccessorObject in the test folder.
+
 ### Lessons Learned
 
 - JUnit tests for assertEquals or assertNull are difficult when working with complex Objects like Films and Actors. A helpful method around this issue is to break up an Object into its fields, such as id, title, or last_name to determine if the Object is null or if the Object is the correct Object for a given id.
